@@ -1,0 +1,2 @@
+pip install opencv-contrib-python==4.2.0.32 opencv-python==4.0.0.21 mxnet==1.6.0
+conda install tensorflow-gpu=2.1.0 numpy==1.17.3 -y

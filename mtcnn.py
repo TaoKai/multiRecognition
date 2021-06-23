@@ -1,4 +1,7 @@
 import os, sys
+from pathlib import Path
+BASE_PATH = Path(__file__).absolute().parent
+BASE_PATH = str(BASE_PATH).replace('\\', '/')
 import cv2
 import numpy as np
 import tensorflow as tf
@@ -17,7 +20,7 @@ def bigImgShow(boxes, labels, img):
     for l, b in zip(labels, boxes):
         b = [int(bb) for bb in b[:4]]
         top = (b[0], b[1]-fSize-1)
-        name = str(l)
+        name = str(l[0])+' '+str(l[1])+' '+str(l[2])
         draw.text(top, name, (255, 50, 50), font=font)
     img = cv2.cvtColor(np.array(pilImg), cv2.COLOR_RGB2BGR)
     return img
@@ -39,7 +42,7 @@ class DetectFace(object):
     def getNames(self):
         return ['pnet/input', 'onet/boxes', 'onet/points', 'onet/Ms_inv', 'onet/FinalCuts']
     
-    def load_pb(self, path='detect_face.pb'):
+    def load_pb(self, path=BASE_PATH+'/detect_face.pb'):
         with tf.Graph().as_default():
             config = tf.ConfigProto()  
             config.gpu_options.allow_growth=True  
